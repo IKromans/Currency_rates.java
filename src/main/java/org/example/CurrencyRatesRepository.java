@@ -1,17 +1,7 @@
 package org.example;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.net.URL;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +11,7 @@ public class CurrencyRatesRepository {
     private final String username = "root";
     private final String password = "root";
 
-    protected List<CurrencyRate> getTodaysRates() throws SQLException {
+    protected List<CurrencyRate> getTodayRates() throws SQLException {
 
         List<CurrencyRate> exchangeRates = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
@@ -56,5 +46,28 @@ public class CurrencyRatesRepository {
             }
         }
         return sb.toString();
+    }
+
+    protected void insertCurrencyRate(String currency, BigDecimal rate, Date date) throws SQLException {
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            DatabaseMetaData meta = conn.getMetaData();
+            try (ResultSet rs = meta.getTables(null, null, "exchange_rates", null)) {
+                if (!rs.next()) {
+                    String createTableSql = "CREATE TABLE exchange_rates (currency VARCHAR(255), rate DECIMAL(10,5), date DATE)";
+                    try (Statement stmt = conn.createStatement()) {
+                        stmt.executeUpdate(createTableSql);
+                    }
+                }
+            }
+
+            String sql = "INSERT INTO exchange_rates (currency, rate, date) VALUES (?, ?, ?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, currency);
+                pstmt.setBigDecimal(2, rate);
+                pstmt.setDate(3, new java.sql.Date(date.getTime()));
+                pstmt.executeUpdate();
+            }
+        }
     }
 }
