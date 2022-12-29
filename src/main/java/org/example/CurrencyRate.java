@@ -3,12 +3,12 @@ package org.example;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class CurrencyRates {
+public class CurrencyRate {
     private String currency;
     private BigDecimal rate;
     private Date date;
 
-    public CurrencyRates(String currency, BigDecimal rate, Date date) {
+    public CurrencyRate(String currency, BigDecimal rate, Date date) {
         this.currency = currency;
         this.rate = rate;
         this.date = date;
