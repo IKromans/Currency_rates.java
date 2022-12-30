@@ -11,9 +11,9 @@ The user is able to input commands to either start endpoints or fetch data.
 In order to be able to run application from your computer. Java Development Kit (JDK) and Apache Maven should be installed and configured.
 Also you need some relational database management system on your PC, for this example I used `MariaDB`.
 
-> Firstly set up database by opening HeidiSQL application that comes with MariaDB.
+> Firstly connect database by opening HeidiSQL application that comes with MariaDB.
 Click `New`, then enter port number `3306`, database name `mariadb`, password `root`, and click `open`.
-This will create empty database named `mariadb`.
+This will create connection to database named `mariadb`.
 ![Screenshot 2022-12-30 131412](https://user-images.githubusercontent.com/66387211/210064609-cc089c91-e14d-47de-9ac5-3ea8ce8ce76d.jpg)
 
 > Now we can clone this repository `https://github.com/IKromans/Currency_rates.java.git`
