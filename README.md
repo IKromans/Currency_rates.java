@@ -10,7 +10,8 @@ In order to be able to run applications from your computer. Java Development Kit
 Also you need some relational database management system on your PC, for this example I used `DBeaver`.
 
 > Firstly set up database by opening DBeaver application.
-![Screenshot 2022-12-29 235037](https://user-images.githubusercontent.com/66387211/210014628-2b96eae6-8810-4616-b8e2-92a469a1604b.jpg)
+![Screenshot 2022-12-29 235037](https://user-images.githubusercontent.com/66387211/210039635-0bb518cf-34bf-4dcb-921d-a3a7839a1b4b.jpg)
+
 
 > Next enter port number `3306`, database name `mariadb`, password `root`, and click `finish`.
 This will create empty database named `mariadb`.
