@@ -7,11 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 public class CurrencyRatesRepository {
-    private final String url = "jdbc:mariadb://localhost:3306/mariadb";
-    private final String username = "root";
-    private final String password = "root";
+    private static final String url = "jdbc:mariadb://localhost:3306/mariadb";
+    private static final String username = "root";
+    private static final String password = "root";
 
-    protected List<CurrencyRate> getTodayRates() throws SQLException {
+    protected static List<CurrencyRate> getTodayRates() throws SQLException {
 
         List<CurrencyRate> exchangeRates = new ArrayList<>();
         String sql = "SELECT currency, rate, date FROM exchange_rates WHERE date = (SELECT MAX(date) FROM exchange_rates)";
@@ -29,7 +29,7 @@ public class CurrencyRatesRepository {
         return exchangeRates;
     }
 
-    protected String getSelectedCurrencyRate(String currency) throws SQLException {
+    protected static String getSelectedCurrencyRate(String currency) throws SQLException {
 
         StringBuilder sb = new StringBuilder();
         String sql = "SELECT rate, date FROM exchange_rates WHERE currency = ? ORDER BY date DESC";
@@ -46,7 +46,7 @@ public class CurrencyRatesRepository {
         return sb.toString();
     }
 
-    protected void insertCurrencyRate(String currency, BigDecimal rate, Date date) throws SQLException {
+    protected static void insertCurrencyRate(String currency, BigDecimal rate, Date date) throws SQLException {
 
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
             DatabaseMetaData meta = conn.getMetaData();

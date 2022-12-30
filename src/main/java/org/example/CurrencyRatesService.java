@@ -17,9 +17,8 @@ import java.util.List;
 
 public class CurrencyRatesService {
 
-    CurrencyRatesRepository currencyRatesRepository = new CurrencyRatesRepository();
 
-    protected void fetchData() throws Exception {
+    protected static void fetchData() throws Exception {
         URL url = new URL("https://www.bank.lv/vk/ecb_rss.xml");
         InputStream inputStream = url.openStream();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -36,16 +35,16 @@ public class CurrencyRatesService {
                 String currency = rates[j];
                 BigDecimal rate = new BigDecimal(rates[j + 1]);
                 rate = rate.setScale(6, RoundingMode.HALF_UP);
-                currencyRatesRepository.insertCurrencyRate(currency, rate, date);
+                CurrencyRatesRepository.insertCurrencyRate(currency, rate, date);
             }
         }
     }
 
-    protected List<CurrencyRate> getTodayRates() throws SQLException {
-        return currencyRatesRepository.getTodayRates();
+    protected static List<CurrencyRate> getTodayRates() throws SQLException {
+        return CurrencyRatesRepository.getTodayRates();
     }
 
-    protected String getSelectedCurrencyRate(String currency) throws SQLException {
-        return currencyRatesRepository.getSelectedCurrencyRate(currency);
+    protected static String getSelectedCurrencyRate(String currency) throws SQLException {
+        return CurrencyRatesRepository.getSelectedCurrencyRate(currency);
     }
 }

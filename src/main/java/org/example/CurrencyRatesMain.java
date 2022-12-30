@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class CurrencyRatesMain {
     public static void main(String[] args) throws Exception {
 
-        CurrencyRatesService currencyRatesService = new CurrencyRatesService();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("""
@@ -19,17 +18,17 @@ public class CurrencyRatesMain {
             case "activate" -> {
                 System.out.println("Starting endpoints...");
                 Javalin server = Javalin.create().start(7000);
-                server.get("/exchange-rates/latest", ctx -> ctx.result(currencyRatesService.getTodayRates().toString()));
+                server.get("/exchange-rates/latest", ctx -> ctx.result(CurrencyRatesService.getTodayRates().toString()));
                 server.get("/exchange-rates/{currency}", ctx -> {
                     String currency = ctx.pathParam("currency");
-                    String rate = currencyRatesService.getSelectedCurrencyRate(currency);
+                    String rate = CurrencyRatesService.getSelectedCurrencyRate(currency);
                     ctx.result(rate);
                 });
                 System.out.println("Endpoints are active!\n");
             }
             case "fetch" -> {
                 System.out.println("Fetching and storing data...");
-                currencyRatesService.fetchData();
+                CurrencyRatesService.fetchData();
                 System.out.println("Data stored successfully!\n");
             }
             default -> System.out.println("Invalid input.");
