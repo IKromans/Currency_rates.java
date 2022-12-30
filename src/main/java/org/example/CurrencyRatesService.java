@@ -44,4 +44,8 @@ public class CurrencyRatesService {
     protected List<CurrencyRate> getTodayRates() throws SQLException {
         return currencyRatesRepository.getTodayRates();
     }
+
+    protected String getSelectedCurrencyRate(String currency) throws SQLException {
+        return currencyRatesRepository.getSelectedCurrencyRate(currency);
+    }
 }

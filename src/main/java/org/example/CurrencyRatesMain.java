@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class CurrencyRatesMain {
     public static void main(String[] args) throws Exception {
 
-        CurrencyRatesRepository currencyRatesRepository = new CurrencyRatesRepository();
         CurrencyRatesService currencyRatesService = new CurrencyRatesService();
         Scanner scanner = new Scanner(System.in);
 
@@ -23,7 +22,7 @@ public class CurrencyRatesMain {
                 server.get("/exchange-rates/latest", ctx -> ctx.result(currencyRatesService.getTodayRates().toString()));
                 server.get("/exchange-rates/{currency}", ctx -> {
                     String currency = ctx.pathParam("currency");
-                    String rate = currencyRatesRepository.getSelectedCurrencyRate(currency);
+                    String rate = currencyRatesService.getSelectedCurrencyRate(currency);
                     ctx.result(rate);
                 });
                 System.out.println("Endpoints are active!\n");
