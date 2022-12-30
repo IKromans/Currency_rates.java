@@ -1,21 +1,20 @@
 # Currency_rates.java
 
-Hey! Welcome to my application that reads currency rates from `https://www.bank.lv/vk/ecb_rss.xml`, saves them to database and displays from API.
+Hey!
+
+Welcome to my application that reads currency rates from `https://www.bank.lv/vk/ecb_rss.xml`, saves them to database and displays from API.
 
 Code is in Java with Maven build tool and Javalin library for two endpoints.
 
 The user is able to input commands to either start endpoints or fetch data.
 
-In order to be able to run applications from your computer. Java Development Kit (JDK) and Apache Maven should be installed and configured.
-Also you need some relational database management system on your PC, for this example I used `DBeaver`.
+In order to be able to run application from your computer. Java Development Kit (JDK) and Apache Maven should be installed and configured.
+Also you need some relational database management system on your PC, for this example I used `MariaDB`.
 
-> Firstly set up database by opening DBeaver application.
-![Screenshot 2022-12-29 235037](https://user-images.githubusercontent.com/66387211/210039635-0bb518cf-34bf-4dcb-921d-a3a7839a1b4b.jpg)
-
-
-> Next enter port number `3306`, database name `mariadb`, password `root`, and click `finish`.
+> Firstly set up database by opening HeidiSQL application that comes with MariaDB.
+Click `New`, then enter port number `3306`, database name `mariadb`, password `root`, and click `open`.
 This will create empty database named `mariadb`.
-![Screenshot 2022-12-29 2350374](https://user-images.githubusercontent.com/66387211/210014888-c8502936-eece-46d7-a594-06cbd6569f9d.jpg)
+![Screenshot 2022-12-30 131412](https://user-images.githubusercontent.com/66387211/210064609-cc089c91-e14d-47de-9ac5-3ea8ce8ce76d.jpg)
 
 > Now we can clone this repository `https://github.com/IKromans/Currency_rates.java.git`
 
@@ -31,9 +30,9 @@ If you choose `fetch`:
 
 ![Screenshot 2022-12-29 234642](https://user-images.githubusercontent.com/66387211/210015506-6510e7d9-cf57-4cfe-9f73-63862f8179a6.jpg)
 
-Program will get data and store them in created `mariadb` database in `exchange_rates` table.
+Program will get data and store them in created `mariadb` database in `exchange_rates` table when database is refreshed.
 
-![Screenshot 2022-12-30 001052](https://user-images.githubusercontent.com/66387211/210015804-f36a5350-c9fd-4fe3-85f0-ec75122aef11.jpg)
+![Screenshot 2022-12-30 132330](https://user-images.githubusercontent.com/66387211/210065639-c79a1473-75cd-44be-bafd-66cfc347a1d8.jpg)
 
 If you choose `activate`:
 
