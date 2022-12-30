@@ -10,8 +10,10 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class CurrencyRatesService {
 
@@ -37,5 +39,9 @@ public class CurrencyRatesService {
                 currencyRatesRepository.insertCurrencyRate(currency, rate, date);
             }
         }
+    }
+
+    protected List<CurrencyRate> getTodayRates() throws SQLException {
+        return currencyRatesRepository.getTodayRates();
     }
 }

@@ -20,7 +20,7 @@ public class CurrencyRatesMain {
             case "activate" -> {
                 System.out.println("Starting endpoints...");
                 Javalin server = Javalin.create().start(7000);
-                server.get("/exchange-rates/latest", ctx -> ctx.result(currencyRatesRepository.getTodayRates().toString()));
+                server.get("/exchange-rates/latest", ctx -> ctx.result(currencyRatesService.getTodayRates().toString()));
                 server.get("/exchange-rates/{currency}", ctx -> {
                     String currency = ctx.pathParam("currency");
                     String rate = currencyRatesRepository.getSelectedCurrencyRate(currency);

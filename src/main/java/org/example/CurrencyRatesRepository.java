@@ -14,17 +14,16 @@ public class CurrencyRatesRepository {
     protected List<CurrencyRate> getTodayRates() throws SQLException {
 
         List<CurrencyRate> exchangeRates = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            String sql = "SELECT currency, rate, date FROM exchange_rates WHERE date = (SELECT MAX(date) FROM exchange_rates)";
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                ResultSet resultSet = pstmt.executeQuery();
-                while (resultSet.next()) {
-                    String currency = resultSet.getString("currency");
-                    BigDecimal rate = resultSet.getBigDecimal("rate");
-                    Date date = resultSet.getDate("date");
-                    CurrencyRate exchangeRate = new CurrencyRate(currency, rate, date);
-                    exchangeRates.add(exchangeRate);
-                }
+        String sql = "SELECT currency, rate, date FROM exchange_rates WHERE date = (SELECT MAX(date) FROM exchange_rates)";
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                String currency = resultSet.getString("currency");
+                BigDecimal rate = resultSet.getBigDecimal("rate");
+                Date date = resultSet.getDate("date");
+                CurrencyRate exchangeRate = new CurrencyRate(currency, rate, date);
+                exchangeRates.add(exchangeRate);
             }
         }
         return exchangeRates;
@@ -33,16 +32,15 @@ public class CurrencyRatesRepository {
     protected String getSelectedCurrencyRate(String currency) throws SQLException {
 
         StringBuilder sb = new StringBuilder();
-        try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            String sql = "SELECT rate, date FROM exchange_rates WHERE currency = ? ORDER BY date DESC";
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, currency);
-                ResultSet resultSet = pstmt.executeQuery();
-                while (resultSet.next()) {
-                    BigDecimal rate = resultSet.getBigDecimal("rate");
-                    Date date = resultSet.getDate("date");
-                    sb.append(currency.toUpperCase()).append(" ").append(rate).append(" (").append(date).append(")\n");
-                }
+        String sql = "SELECT rate, date FROM exchange_rates WHERE currency = ? ORDER BY date DESC";
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, currency);
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                BigDecimal rate = resultSet.getBigDecimal("rate");
+                Date date = resultSet.getDate("date");
+                sb.append(currency.toUpperCase()).append(" ").append(rate).append(" (").append(date).append(")\n");
             }
         }
         return sb.toString();
@@ -60,7 +58,6 @@ public class CurrencyRatesRepository {
                     }
                 }
             }
-
             String sql = "INSERT INTO exchange_rates (currency, rate, date) VALUES (?, ?, ?)";
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, currency);
